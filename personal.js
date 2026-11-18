@@ -2,7 +2,7 @@
 /* Personal section: house expenses, personal income and a lend/borrow (lain dain) ledger.
    Kept apart from the farm accounts, so it never changes the farm profit. All records live in
    one Firestore collection, "personal", told apart by the field "kind": exp | inc | led. */
-const P_EXP = ['rashan', 'medical', 'transport', 'bills', 'school', 'clothes', 'mobile', 'other'];
+const P_EXP = ['rashan', 'fruit', 'veg', 'meat', 'household', 'medical', 'transport', 'bills', 'school', 'clothes', 'mobile', 'repair', 'guest', 'charity', 'other'];
 const P_INC = ['salary', 'business', 'farm', 'other'];
 const pAll = kind => list('personal').filter(r => r.kind === kind);
 const pKey = n => String(n || '').trim().replace(/\s+/g, ' ').toLowerCase();
@@ -80,7 +80,7 @@ function personalView() {
   const f = S.sub.personal;
   const body = f === 'exp' || f === 'inc' ? pEntries(f) : f === 'led' ? pLedger() : pSummary();
   const warn = S.pErr ? `<div class="banner bad" role="alert">${t(S.pErr === 'denied' ? 'ps_denied' : 'ps_err')}</div>` : '';
-  return `<h2>${t('nav_personal')}</h2>${warn}${seg('personal', [['exp', t('ps_t_exp')], ['inc', t('ps_t_inc')], ['led', t('ps_t_led')], ['sum', t('ps_t_sum')]])}<div class="stack">${body}</div>`;
+  return `<h2>${t('nav_personal')}</h2>${warn}${seg('personal', [['exp', t('ps_t_exp')], ['inc', t('ps_t_inc')], ['led', t('ps_t_led')], ['sum', t('ps_t_sum')]])}<div class="stack">${body}<p class="hint">${t('ps_private')}</p></div>`;
 }
 
 /* ---------- forms ---------- */

@@ -18,7 +18,7 @@ function stopData() {
   unsubs = []; clearTimeout(slowTimer);
   DB = null;
   COLS.forEach(c => { S.d[c] = {}; });
-  S.d.personal = {}; S.pErr = ''; S.person = null;
+  S.d.personal = {}; S.pErr = ''; S.person = null; S.uid = '';
   S.loaded = {}; S.fresh = {}; S.sync = 'loading'; S.slow = false; S.user = '';
   created.clear();
   if (typeof SHEET !== 'undefined' && SHEET) closeSheet();
@@ -26,7 +26,7 @@ function stopData() {
 
 function startData(user) {
   stopData();
-  S.user = user.email || ''; S.auth = 'ok'; S.authErr = '';
+  S.user = user.email || ''; S.uid = user.uid || ''; S.auth = 'ok'; S.authErr = '';
   DB = firebase.firestore();
   slowTimer = setTimeout(() => { if (!COLS.every(c => S.fresh[c]) && navigator.onLine !== false) { S.slow = true; scheduleRender(); } }, 10000);
   COLS.forEach(col => {
@@ -46,8 +46,8 @@ function startData(user) {
       } else { S.sync = 'error'; scheduleRender(); }
     }));
   });
-  // Personal records: own listener. If it fails (e.g. Firestore rules), only the Personal screen says so.
-  unsubs.push(DB.collection('personal').onSnapshot(snap => {
+  // Personal records (this login only): own listener. If it fails (e.g. Firestore rules), only the Personal screen says so.
+  unsubs.push(DB.collection('users').doc(S.uid).collection('personal').onSnapshot(snap => {
     const m = {};
     snap.docs.forEach(d => { m[d.id] = Object.assign({ id: d.id }, d.data()); });
     S.d.personal = m; S.pErr = '';

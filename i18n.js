@@ -156,6 +156,9 @@ const I = {
   psc_rashan: ['راشن', 'Groceries'], psc_medical: ['علاج / میڈیکل', 'Medical'], psc_transport: ['کرایہ / پٹرول', 'Transport / fuel'],
   psc_bills: ['بل (بجلی، گیس، پانی)', 'Bills'], psc_school: ['تعلیم / فیس', 'Education'], psc_clothes: ['کپڑے', 'Clothes'],
   psc_mobile: ['موبائل / انٹرنیٹ', 'Mobile / internet'], psc_other: ['دیگر', 'Other'],
+  psc_fruit: ['فروٹ', 'Fruit'], psc_veg: ['سبزی', 'Vegetables'], psc_meat: ['گوشت / چکن', 'Meat / chicken'], psc_household: ['گھریلو سامان', 'Household items'],
+  psc_repair: ['مرمت', 'Repairs'], psc_guest: ['مہمان / تحفے', 'Guests / gifts'], psc_charity: ['صدقہ / خیرات', 'Charity'],
+  ps_private: ['ہر لاگ اِن کا ذاتی حساب الگ ہے۔ دوسرا لاگ اِن اپنا حساب دیکھے گا۔', 'Each login has its own separate personal records.'],
   psi_salary: ['تنخواہ', 'Salary'], psi_business: ['کاروبار / فیس', 'Business / fees'], psi_farm: ['ڈیری فارم سے', 'From dairy farm'], psi_other: ['دیگر', 'Other'],
   ps_person: ['شخص کا نام', 'Person'],
   psd_gave: ['میں نے دیا', 'I gave'], psd_took: ['میں نے لیا', 'I took'], psd_recv: ['مجھے واپس ملا', 'Received back'], psd_paid: ['میں نے واپس کیا', 'I paid back'],
@@ -165,6 +168,6 @@ const I = {
   ps_income: ['آمدن', 'Income'], ps_expense: ['خرچ', 'Expense'], ps_net_pos: ['بچت', 'Saved'], ps_net_neg: ['کمی (خرچ زیادہ)', 'Shortfall (spent more)'],
   ps_alltime: ['شروع سے اب تک', 'All time'],
   ps_note_led: ['ادھار کا لین دین آمدن یا خرچ میں شامل نہیں ہوتا۔', 'Lend/borrow entries are not counted as income or expense.'],
-  ps_denied: ['ذاتی ریکارڈ کی اجازت نہیں ہے۔ Firebase کے rules میں "personal" شامل کرنا ہو گا۔', 'Personal records are not allowed yet. The Firebase rules need to include "personal".'],
+  ps_denied: ['ذاتی ریکارڈ کی اجازت نہیں ہے۔ Firebase کے rules میں ذاتی حصہ شامل کرنا ہو گا۔', 'Personal records are not allowed yet. The Firebase rules need to cover the personal part.'],
   ps_err: ['ذاتی ریکارڈ ابھی نہیں آ رہا۔', 'Personal records are not loading right now.']
 };

@@ -3,7 +3,7 @@
 const COLS = ['animals', 'days', 'purchases', 'expenses', 'vaccines', 'health', 'breeding', 'calvings', 'settings'];
 const S = {
   lang: 'ur', view: 'home', animalId: null, date: null, month: null,
-  sub: { animals: 'all', health: 'vacc', acc: 'stock', personal: 'exp' }, q: '', pmonth: null, person: null, pErr: '',
+  sub: { animals: 'all', health: 'vacc', acc: 'stock', personal: 'exp' }, q: '', pmonth: null, person: null, pErr: '', uid: '',
   d: { animals: {}, days: {}, purchases: {}, expenses: {}, vaccines: {}, health: {}, breeding: {}, calvings: {}, settings: {}, personal: {} },
   loaded: {}, fresh: {}, sync: 'loading', local: false, slow: false, readOnly: false,
   auth: 'init', user: '', authErr: ''
@@ -79,6 +79,8 @@ function deepMerge(a, b) {
   return out;
 }
 const created = new Set();
+/* Personal records belong to one login: they live under users/<uid>/personal, so each login only reads its own. */
+const colPath = col => (col === 'personal' && S.uid ? 'users/' + S.uid + '/personal' : col);
 /* Firestore keeps writes in its local cache and syncs later, so a write must not wait for the server
    (that would hang while the farm has no signal). Server-side refusals are reported by a toast. */
 const plain = d => JSON.parse(JSON.stringify(d));
@@ -88,16 +90,16 @@ const store = {
   async set(col, id, data) {
     created.add(col + '/' + id);
     if (!DB) { S.d[col] = Object.assign({}, S.d[col], { [id]: Object.assign({ id }, data) }); scheduleRender(); return; }
-    fire(DB.doc(col + '/' + id).set(plain(data)));
+    fire(DB.doc(colPath(col) + '/' + id).set(plain(data)));
   },
   async merge(col, id, data) {
     created.add(col + '/' + id);
     if (!DB) { S.d[col] = Object.assign({}, S.d[col], { [id]: deepMerge(Object.assign({ id }, S.d[col][id] || {}), data) }); scheduleRender(); return; }
-    fire(DB.doc(col + '/' + id).set(plain(data), { merge: true }));
+    fire(DB.doc(colPath(col) + '/' + id).set(plain(data), { merge: true }));
   },
   async del(col, id) {
     if (!DB) { const m = Object.assign({}, S.d[col]); delete m[id]; S.d[col] = m; scheduleRender(); return; }
-    fire(DB.doc(col + '/' + id).delete());
+    fire(DB.doc(colPath(col) + '/' + id).delete());
   }
 };
 async function run(fn) {
