@@ -54,6 +54,9 @@ function connect() {
   try {
     if (!firebase.apps.length) firebase.initializeApp(window.FIREBASE_CONFIG);
     const fs = firebase.firestore();
+    // Some mobile networks stall Firestore's default streaming connection ("Connecting..." forever).
+    // Auto-detect switches to plain long-polling in that case. Must be set before any other Firestore call.
+    try { fs.settings({ experimentalAutoDetectLongPolling: true, merge: true }); } catch (e) { console.warn('firestore settings', e); }
     // Keep a copy of the records on the phone so the app also works with no signal.
     fs.enablePersistence({ synchronizeTabs: true }).catch(e => console.warn('offline cache not enabled', e && e.code));
     firebase.auth().onAuthStateChanged(user => {

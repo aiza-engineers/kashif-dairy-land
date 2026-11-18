@@ -1,5 +1,5 @@
 /* Keeps the app screens on the phone so it opens with no signal. Records are kept by Firestore itself. */
-const V = 'kdl-v1';
+const V = 'kdl-v2';
 const SHELL = ['./', 'index.html', 'style.css', 'i18n.js', 'core.js', 'calc.js', 'views.js', 'forms.js', 'events.js', 'main.js',
   'firebase-config.js', 'logo.svg', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 const SDK = ['app', 'auth', 'firestore'].map(n => `https://www.gstatic.com/firebasejs/10.14.1/firebase-${n}-compat.js`);
