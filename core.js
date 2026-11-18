@@ -3,7 +3,7 @@
 const COLS = ['animals', 'days', 'purchases', 'expenses', 'vaccines', 'health', 'breeding', 'calvings', 'settings'];
 const S = {
   lang: 'ur', view: 'home', animalId: null, date: null, month: null,
-  sub: { animals: 'all', health: 'vacc', acc: 'stock', personal: 'exp' }, q: '', pmonth: null, person: null, pErr: '', uid: '',
+  sub: { animals: 'all', health: 'vacc', acc: 'stock', personal: 'exp' }, q: '', pmonth: null, person: null, pErr: '', uid: '', rp: {},
   d: { animals: {}, days: {}, purchases: {}, expenses: {}, vaccines: {}, health: {}, breeding: {}, calvings: {}, settings: {}, personal: {} },
   loaded: {}, fresh: {}, sync: 'loading', local: false, slow: false, readOnly: false,
   auth: 'init', user: '', authErr: ''

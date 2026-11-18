@@ -158,6 +158,7 @@ const ACT = {
   'month-prev': () => { S.month = addMonths(S.month, -1); render(); }, 'month-next': () => { S.month = addMonths(S.month, 1); render(); },
   sug: el => { const i = document.getElementById(el.dataset.t); if (i) { i.value = el.dataset.v; saveDaily(i); liveDaily(); } },
   'sug-all': suggestAll,
+  'rep-go': repGo, 'report-print': printReport, 'report-close': closeReport,
   'sheet-save': () => sheetSave(), 'sheet-cancel': () => closeSheet(), 'sheet-delete': el => sheetDelete(el),
   'sheet-scrim': (el, e) => { if (e.target === el) closeSheet(); },
   'feed-add': () => { collectFeeds(); feedDraft.push({ id: 'f' + uid(), ur: '', en: '', unit: 'kg', buyUnit: 'kg', factor: 1, base: 0, per: 0 }); render(); },
@@ -180,6 +181,7 @@ document.addEventListener('change', e => {
   else if (el.id === 'd-date') { if (el.value) { S.date = el.value; render(); } }
   else if (el.id === 'd-rate') saveRate(el);
   else if (el.id === 'restore-file') doRestore(el);
+  else if (el.id && el.id.indexOf('rp-') === 0) rpChange(el);
   else if (el.closest('#sheet')) refreshSheet();
 });
 document.addEventListener('input', e => {
@@ -189,4 +191,4 @@ document.addEventListener('input', e => {
   else if (el.closest('#sheet')) refreshSheet();
 });
 document.addEventListener('submit', e => { if (e.target.id === 'login-form') { e.preventDefault(); doLogin(); } });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && SHEET) closeSheet(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (REPORT) closeReport(); else if (SHEET) closeSheet(); } });

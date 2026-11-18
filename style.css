@@ -257,3 +257,61 @@ html[lang="ur"] .login-title { font-size: 1.7rem; }
 .login-form { width: 100%; display: flex; flex-direction: column; gap: 12px; text-align: start; }
 .login-msg { min-height: 1.4em; color: var(--bad); font-size: 0.95rem; text-align: center; }
 .login-msg.ok { color: var(--ok); }
+
+/* Reports: a plain white page that is shown full screen and printed to PDF */
+html.rp-open, html.rp-open body { overflow: hidden; }
+#report { position: fixed; inset: 0; z-index: 60; background: #cfd6cd; overflow: auto; -webkit-overflow-scrolling: touch; }
+#report .rbar { position: sticky; top: 0; z-index: 2; display: flex; gap: 10px; padding: 10px 12px; background: var(--green); }
+#report .rbar .btn { flex: 1; }
+#report .paper { background: #fff; color: #111; max-width: 820px; margin: 12px auto 40px; padding: 20px 18px 28px; border-radius: 6px; font-size: 0.92rem; line-height: 1.6; }
+html[lang="ur"] #report .paper { line-height: 1.9; }
+.paper { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.paper .lh { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 2px 0 6px; }
+.paper .lh img { width: 80px; height: 80px; flex: none; }
+.paper .lht { text-align: center; }
+.paper .lhur { font-size: 2rem; font-weight: 700; color: #103a22; line-height: 1.5; }
+.paper .lhen { font-size: 0.95rem; letter-spacing: 0.3em; color: #7a5a1c; font-weight: 600; font-family: var(--f-display); }
+.paper .lhaddr { font-size: 0.78rem; color: #444; margin-top: 3px; line-height: 1.5; }
+.paper .lhrule { margin: 4px 0 14px; }
+.paper .lhrule i { display: block; height: 3px; background: #103a22; }
+.paper .lhrule i + i { height: 1.5px; background: #c49d4e; margin-top: 2px; }
+.paper .rtb { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 8px; }
+.paper .rtt { flex: 1; min-width: 0; }
+.paper h1 { font-size: 1.45rem; margin: 0; color: #103a22; }
+.paper h2 { font-size: 1.05rem; margin: 18px 0 6px; color: #103a22; border-bottom: 1px solid #c9d2c8; padding-bottom: 3px; }
+.paper .rsub { font-size: 0.9rem; color: #333; }
+.paper .rdate { font-size: 0.8rem; color: #555; text-align: end; }
+.paper table.rt { width: 100%; border-collapse: collapse; margin: 6px 0 4px; font-size: 0.86rem; }
+.paper .rt th { background: #eef2ec; text-align: start; font-weight: 700; padding: 5px 6px; border: 1px solid #c9d2c8; }
+.paper .rt td { padding: 4px 6px; border: 1px solid #d8dfd7; vertical-align: top; }
+.paper .rt .n { text-align: end; white-space: nowrap; }
+.paper .rt tfoot td { font-weight: 700; background: #f6f8f5; }
+.paper .rt.kv td:first-child { width: 62%; }
+.paper .rt small { color: #555; }
+.paper .neg { color: #b3261e; }
+.paper .pos { color: #1b7544; }
+.paper .rnone { text-align: center; color: #666; }
+.paper .rbig { font-size: 1.25rem; font-weight: 700; margin: 10px 0; color: #103a22; }
+.paper .rnote { font-size: 0.8rem; color: #555; margin: 4px 0; }
+.paper .rfoot { margin-top: 22px; break-inside: avoid; }
+.paper .rfoot .lhrule { margin: 0 0 6px; }
+.paper .rft { display: flex; justify-content: space-between; gap: 12px; font-size: 0.75rem; color: #555; }
+.paper tr { break-inside: avoid; }
+.paper thead { display: table-header-group; }
+.paper tfoot { display: table-row-group; }
+.paper section { break-inside: auto; }
+.paper h2 { break-after: avoid; }
+@page { size: A4; margin: 12mm; }
+@media print {
+  html, body { background: #fff !important; overflow: visible !important; height: auto !important; }
+  body > *:not(#report) { display: none !important; }
+  #report { position: static; overflow: visible; background: #fff; }
+  #report .rbar { display: none; }
+  #report .paper { margin: 0; max-width: none; padding: 0; border-radius: 0; font-size: 0.86rem; }
+  .paper table.rt { font-size: 0.82rem; }
+  .paper .rt td, .paper .rt th { padding: 3px 6px; }
+  .paper h2 { margin: 12px 0 4px; }
+  .paper .lh img { width: 68px; height: 68px; }
+  .paper .lhur { font-size: 1.7rem; line-height: 1.4; }
+  .paper .rfoot { margin-top: 12px; }
+}

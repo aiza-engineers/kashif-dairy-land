@@ -70,7 +70,7 @@ function render() {
     document.getElementById('sheet').classList.add('hidden');
     return;
   }
-  const views = { home: homeView, daily: dailyView, animals: animalsView, animal: animalView, health: healthView, accounts: accountsView, personal: personalView, settings: settingsView };
+  const views = { home: homeView, daily: dailyView, animals: animalsView, animal: animalView, health: healthView, accounts: accountsView, personal: personalView, reports: reportsView, settings: settingsView };
   $('#root').innerHTML = header() + `<main class="app" id="app">${banners()}${(views[S.view] || homeView)()}</main>` + tabsHTML();
   window.scrollTo(0, y);
 }
@@ -322,7 +322,7 @@ function accountsView() {
       ${r.feedUsed > 0 ? line(t('m_feed_used'), money(r.feedUsed)) : ''}
       ${r.boughtCount ? line(`${t('m_animals')} (${r.boughtCount})`, money(r.capital)) + `<p class="hint">${t('m_animals_note')}</p>` : ''}</div>`;
   }
-  return `<h2>${t('nav_accounts')}</h2>${seg('acc', [['stock', t('ac_stock')], ['purch', t('ac_purch')], ['exp', t('ac_exp')], ['month', t('ac_month')]])}<div class="stack">${body}</div>`;
+  return `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2>${t('nav_accounts')}</h2>${btn('nav', 'PDF', 'sm', 'data-v="reports"')}</div>${seg('acc', [['stock', t('ac_stock')], ['purch', t('ac_purch')], ['exp', t('ac_exp')], ['month', t('ac_month')]])}<div class="stack">${body}</div>`;
 }
 
 /* ---------- settings ---------- */
@@ -347,6 +347,7 @@ function settingsView() {
     ${n('s-low', t('s_low'), c.lowDays)}</section>
   <section class="stack"><h3>${t('s_feeds')}</h3><p class="hint">${t('s_feed_rule')}<br>${t('s_ration_note')}</p>${feedDraft.map(feedEditor).join('')}${btn('feed-add', ic('plus') + t('add_feed'), 'block')}</section>
   ${btn('settings-save', t('save'), 'primary block')}
+  <section class="card stack"><h3>${t('rp_title')}</h3>${btn('nav', t('rp_open'), 'block', 'data-v="reports"')}</section>
   <section class="card stack"><h3>${t('backup')}</h3><p class="hint">${t('b_note')}</p>
     ${btn('backup', t('b_download'), 'block')}${btn('restore', t('b_restore'), 'block')}<input type="file" id="restore-file" accept=".json,application/json" class="hidden"></section>
   <section class="card stack"><h3>${t('acct')}</h3><p class="hint" dir="ltr" style="text-align:start">${t('signed_as')} ${esc(S.user)}</p>${btn('logout', t('l_out'), 'block')}</section>
