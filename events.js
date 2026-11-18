@@ -77,6 +77,7 @@ async function saveSettings() {
 function doBackup() {
   const data = {};
   COLS.forEach(c => { data[c] = S.d[c]; });
+  data.personal = S.d.personal;
   const json = JSON.stringify({ app: 'kashif-dairy-land', v: 1, exportedAt: new Date().toISOString(), data }, null, 1);
   try {
     const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
@@ -94,7 +95,7 @@ async function doRestore(input) {
   try { obj = JSON.parse(await f.text()); if (!obj || obj.app !== 'kashif-dairy-land' || !obj.data) throw new Error('bad'); }
   catch (e) { toast(t('b_bad'), 'bad'); input.value = ''; return; }
   toast(t('restoring'));
-  for (const col of COLS) {
+  for (const col of [...COLS, 'personal']) {
     for (const [id, doc] of Object.entries(obj.data[col] || {})) {
       const body = Object.assign({}, doc); delete body.id;
       if (!(await run(() => store.set(col, id, body)))) { input.value = ''; return; }
@@ -141,6 +142,11 @@ const ACT = {
   'purchase-edit': el => purchaseForm(el.dataset.id),
   'expense-add': () => expenseForm(),
   'expense-edit': el => expenseForm(el.dataset.id),
+  'pexp-add': () => pMoneyForm('exp'), 'pexp-edit': el => pMoneyForm('exp', el.dataset.id),
+  'pinc-add': () => pMoneyForm('inc'), 'pinc-edit': el => pMoneyForm('inc', el.dataset.id),
+  'led-add': () => pLedgerForm(null), 'led-edit': el => pLedgerForm(el.dataset.id),
+  pperson: el => { S.person = el.dataset.p; render(); toTop(); }, 'pperson-all': () => { S.person = null; render(); },
+  'pmonth-prev': () => { S.pmonth = addMonths(S.pmonth, -1); render(); }, 'pmonth-next': () => { S.pmonth = addMonths(S.pmonth, 1); render(); },
   'mark-dry': async el => { if (await run(() => store.merge('breeding', el.dataset.id, { driedOn: todayISO() }))) toast(t('saved_ok')); },
   alert: el => {
     let go = {}; try { go = JSON.parse(el.dataset.go); } catch (e) { /* ignore */ }

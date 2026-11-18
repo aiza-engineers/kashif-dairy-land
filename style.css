@@ -111,7 +111,7 @@ html[lang="ur"] .hdr .title { font-size: 1.15rem; }
 .tabs {
   position: fixed; inset-inline: 0; bottom: 0; z-index: 20;
   background: var(--card); border-top: 1px solid var(--line);
-  display: grid; grid-template-columns: repeat(5, 1fr);
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
   padding-bottom: env(safe-area-inset-bottom);
 }
 .tab {

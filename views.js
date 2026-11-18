@@ -7,6 +7,7 @@ const ICON = {
   animals: '<path d="M4 4h8.2L20 11.8 11.8 20 4 12.2zM8.5 8.5h.01"/>',
   health: '<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><path d="M12 8v8M8 12h8"/>',
   accounts: '<path d="M3 8h15.5a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM3 8l2.5-3.5H16M16 14h2.5"/>',
+  personal: '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-4 3.2-6.5 7-6.5s7 2.5 7 6.5"/>',
   gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/>',
   plus: '<path d="M12 5v14M5 12h14"/>', x: '<path d="M6 6l12 12M18 6 6 18"/>', chev: '<path d="m9 5 7 7-7 7"/>',
   left: '<path d="m15 5-7 7 7 7"/>', right: '<path d="m9 5 7 7-7 7"/>'
@@ -46,7 +47,7 @@ function header() {
 }
 function tabsHTML() {
   const n = buildAlerts(todayISO()).length;
-  const items = [['home', 'nav_home'], ['daily', 'nav_daily'], ['animals', 'nav_animals'], ['health', 'nav_health'], ['accounts', 'nav_accounts']];
+  const items = [['home', 'nav_home'], ['daily', 'nav_daily'], ['animals', 'nav_animals'], ['health', 'nav_health'], ['accounts', 'nav_accounts'], ['personal', 'nav_personal']];
   const cur = S.view === 'animal' ? 'animals' : S.view;
   return `<nav class="tabs" aria-label="Main">${items.map(([v, k]) => `<button type="button" class="tab" data-act="nav" data-v="${v}" ${cur === v ? 'aria-current="page"' : ''}>${ic(v)}${v === 'home' && n ? `<span class="badge">${n}</span>` : ''}<span>${t(k)}</span></button>`).join('')}</nav>`;
 }
@@ -69,7 +70,7 @@ function render() {
     document.getElementById('sheet').classList.add('hidden');
     return;
   }
-  const views = { home: homeView, daily: dailyView, animals: animalsView, animal: animalView, health: healthView, accounts: accountsView, settings: settingsView };
+  const views = { home: homeView, daily: dailyView, animals: animalsView, animal: animalView, health: healthView, accounts: accountsView, personal: personalView, settings: settingsView };
   $('#root').innerHTML = header() + `<main class="app" id="app">${banners()}${(views[S.view] || homeView)()}</main>` + tabsHTML();
   window.scrollTo(0, y);
 }

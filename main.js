@@ -18,6 +18,7 @@ function stopData() {
   unsubs = []; clearTimeout(slowTimer);
   DB = null;
   COLS.forEach(c => { S.d[c] = {}; });
+  S.d.personal = {}; S.pErr = ''; S.person = null;
   S.loaded = {}; S.fresh = {}; S.sync = 'loading'; S.slow = false; S.user = '';
   created.clear();
   if (typeof SHEET !== 'undefined' && SHEET) closeSheet();
@@ -45,6 +46,17 @@ function startData(user) {
       } else { S.sync = 'error'; scheduleRender(); }
     }));
   });
+  // Personal records: own listener. If it fails (e.g. Firestore rules), only the Personal screen says so.
+  unsubs.push(DB.collection('personal').onSnapshot(snap => {
+    const m = {};
+    snap.docs.forEach(d => { m[d.id] = Object.assign({ id: d.id }, d.data()); });
+    S.d.personal = m; S.pErr = '';
+    scheduleRender();
+  }, err => {
+    console.error(err);
+    S.pErr = err && err.code === 'permission-denied' ? 'denied' : 'other';
+    scheduleRender();
+  }));
   render();
 }
 
