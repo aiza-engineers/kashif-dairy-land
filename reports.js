@@ -6,7 +6,6 @@ let REPORT = null;
 /* ---------- small helpers ---------- */
 const rLocal = k => { try { return localStorage.getItem(k) || ''; } catch (e) { return ''; } };
 const rName = () => rLocal('kdl-rpname');
-const rAddr = () => rLocal('kdl-rpaddr');
 const rNum = (n, d = 0) => nz(fmtNum(n, d));
 const rSigned = n => (n < 0 ? `<span class="neg">${nz('−' + fmtNum(-n))}</span>` : `<span class="pos">${nz(fmtNum(n))}</span>`);
 const rAsc = rows => rows.sort((a, b) => String(a.date).localeCompare(String(b.date)) || (a.createdAt || 0) - (b.createdAt || 0));
@@ -24,17 +23,16 @@ function rTable(cols, rows, foot) {
 const rKV = rows => `<table class="rt kv"><tbody>${rows.map(r => `<tr><td>${r[0]}</td><td class="n">${r[1]}</td></tr>`).join('')}</tbody></table>`;
 const rSec = (title, html) => `<section><h2>${title}</h2>${html}</section>`;
 
-/* Every report sits on the Kashif Dairy Land letterhead: logo, name in Urdu and English, an optional address line. */
+/* Every report sits on the Kashif Dairy Land letterhead: logo and name in Urdu and English (no address or phone). */
 function rLetterhead() {
-  const addr = rAddr();
-  return `<div class="lh" dir="ltr"><img src="logo.svg" alt=""><div class="lht"><div class="lhur" lang="ur" dir="rtl">${I.app[0]}</div><div class="lhen">${I.app[1].toUpperCase()}</div>${addr ? `<div class="lhaddr">${esc(addr)}</div>` : ''}</div></div>
+  return `<div class="lh" dir="ltr"><img src="logo.svg" alt=""><div class="lht"><div class="lhur" lang="ur" dir="rtl">${I.app[0]}</div><div class="lhen">${I.app[1].toUpperCase()}</div></div></div>
     <div class="lhrule"><i></i><i></i></div>`;
 }
 function rWrap(o) {
-  const by = rName(), addr = rAddr();
+  const by = rName();
   const head = `${rLetterhead()}<div class="rtb"><div class="rtt"><h1>${esc(o.title)}</h1>${o.sub ? `<div class="rsub">${o.sub}</div>` : ''}</div>
     <div class="rdate">${t('rp_date')}: ${nz(fmtDate(todayISO()))}${by ? `<br>${t('rp_by')}: ${esc(by)}` : ''}</div></div>`;
-  const foot = `<footer class="rfoot"><div class="lhrule"><i></i><i></i></div><div class="rft"><span>${I.app[S.lang === 'ur' ? 0 : 1]}${addr ? ' · ' + esc(addr) : ''}</span><span>${t('rp_foot')}</span></div></footer>`;
+  const foot = `<footer class="rfoot"><div class="lhrule"><i></i><i></i></div><div class="rft"><span>${I.app[S.lang === 'ur' ? 0 : 1]}</span><span>${t('rp_foot')}</span></div></footer>`;
   return { file: `Kashif-Dairy-Land_${o.slug}`, html: head + o.body + foot };
 }
 
@@ -193,7 +191,6 @@ function reportsView() {
   return `<div style="display:flex;gap:10px;align-items:center">${btn('back', ic(rtl ? 'right' : 'left'), 'sm')}<h2 style="flex:1">${t('rp_title')}</h2></div>
   <p class="hint">${t('rp_how')}</p>
   <div class="field"><label for="rp-name">${t('rp_name')}</label><input class="inp" id="rp-name" type="text" value="${esc(rName())}" autocomplete="off"></div>
-  <div class="field"><label for="rp-addr">${t('rp_addr')}</label><input class="inp" id="rp-addr" type="text" value="${esc(rAddr())}" autocomplete="off"></div>
   <h3>${t('rp_farm')}</h3>
   ${card(t('rp_preg'), t('rp_preg_h'), '', 'preg')}
   ${card(t('rp_herd'), t('rp_herd_h'), '', 'herd')}
@@ -242,6 +239,6 @@ function repGo(el) {
   openReport(rep);
 }
 function rpChange(el) {
-  if (el.id === 'rp-name' || el.id === 'rp-addr') { try { localStorage.setItem(el.id === 'rp-name' ? 'kdl-rpname' : 'kdl-rpaddr', el.value.trim()); } catch (e) { /* convenience only */ } return; }
+  if (el.id === 'rp-name') { try { localStorage.setItem('kdl-rpname', el.value.trim()); } catch (e) { /* convenience only */ } return; }
   S.rp[el.id] = el.value;
 }

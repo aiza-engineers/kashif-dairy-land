@@ -174,7 +174,6 @@ const I = {
   rp_how: ['جس رپورٹ کی ضرورت ہو اس کے نیچے "PDF بنائیں" دبائیں۔ رپورٹ کھلے گی، پھر "PDF محفوظ کریں" دبائیں اور پرنٹر کی جگہ "Save as PDF" چنیں۔ فائل ڈاؤن لوڈ میں آ جائے گی، وہاں سے واٹس ایپ وغیرہ پر بھیج سکتے ہیں۔',
     'Tap "Make PDF" under a report, then "Save PDF", and choose "Save as PDF" as the printer. The file goes to Downloads; share it from there.'],
   rp_name: ['رپورٹ پر آپ کا نام (اختیاری)', 'Your name on reports (optional)'],
-  rp_addr: ['لیٹر ہیڈ پر پتہ / فون (اختیاری)', 'Address / phone on the letterhead (optional)'],
   rp_farm: ['فارم کی رپورٹیں', 'Farm reports'], rp_personal: ['ذاتی رپورٹیں', 'Personal reports'],
   rp_go: ['PDF بنائیں', 'Make PDF'], rp_save: ['PDF محفوظ کریں', 'Save PDF'], rp_pick: ['پہلے کوئی انتخاب کریں', 'Choose one first'],
   rp_month: ['مہینہ', 'Month'], rp_year: ['سال', 'Year'], rp_person: ['شخص', 'Person'],

@@ -271,7 +271,6 @@ html[lang="ur"] #report .paper { line-height: 1.9; }
 .paper .lht { text-align: center; }
 .paper .lhur { font-size: 2rem; font-weight: 700; color: #103a22; line-height: 1.5; }
 .paper .lhen { font-size: 0.95rem; letter-spacing: 0.3em; color: #7a5a1c; font-weight: 600; font-family: var(--f-display); }
-.paper .lhaddr { font-size: 0.78rem; color: #444; margin-top: 3px; line-height: 1.5; }
 .paper .lhrule { margin: 4px 0 14px; }
 .paper .lhrule i { display: block; height: 3px; background: #103a22; }
 .paper .lhrule i + i { height: 1.5px; background: #c49d4e; margin-top: 2px; }
